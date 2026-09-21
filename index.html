@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; manifest-src 'self'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="OsmoNPT es una herramienta digital de apoyo para la evaluación de formulaciones de Nutrición Parenteral. Permite estimar la osmolaridad final, el aporte proteico, el volumen total de agua y los volúmenes de los componentes de la mezcla.">
+<meta name="theme-color" content="#012F5A">
+<title>OsmoNPT, evaluación integral de Nutrición Parenteral</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+  <symbol id="i-molecule" viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="2.6"/><circle cx="12" cy="5.5" r="2.6"/><circle cx="18.5" cy="16" r="2.6"/><path d="m6.9 15.2 3.7-7.4"/><path d="m13.3 7.8 4.1 5.9"/><path d="M8.3 17.2h7.6"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+  <symbol id="i-pie" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></symbol>
+  <symbol id="i-catheter" viewBox="0 0 24 24"><path d="M2 19c3.3-2.6 6.7-2.6 10 0s6.7 2.6 10 0"/><path d="M6.2 6.2 14.5 14.5"/><rect x="2.6" y="2.6" width="5.4" height="3.6" rx="1" transform="rotate(45 5.3 4.4)"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><path d="M7 9V3.5h10V9"/><path d="M7 17H4.5v-6.5a1.5 1.5 0 0 1 1.5-1.5h12a1.5 1.5 0 0 1 1.5 1.5V17H17"/><rect x="7" y="14" width="10" height="6.5" rx="1"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.7 2.7 5.5-5.7"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 21.5 20h-19z"/><path d="M12 10v4.5"/><path d="M12 17.3v.1"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.9v.1"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="M5 12h14"/></symbol>
+</svg>
+
+<header class="site">
+  <div class="wrap site-in">
+    <a class="brand" href="#inicio" aria-label="OsmoNPT, ir al inicio"><img id="logo" src="assets/logo.png" alt="OsmoNPT" width="142" height="44"></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#calculadora">Calculadora</a>
+      <a href="#acerca">Acerca de</a>
+    </nav>
+    <button type="button" class="btn btn-primary" id="newEval" aria-label="Nueva evaluación"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg><span class="bl">Nueva evaluación</span><span class="bs" aria-hidden="true">Nueva</span></button>
+  </div>
+</header>
+
+<main>
+  <section id="inicio" class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <p class="tagline">Evaluación integral de Nutrición Parenteral</p>
+        <h1><span class="h1-l">Evalúa la</span> <span class="h1-l">formulación de NPT</span> <span class="h1-l">en un solo lugar</span></h1>
+        <p class="hero-lede">Calcula osmolaridad, composición, agua, calorías y orientación de acceso venoso de manera clara y organizada.</p>
+        <div class="hero-cta"><a class="btn btn-primary btn-lg" href="#calculadora" id="startEval">Iniciar evaluación</a></div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 440 400" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="222" cy="196" r="160" fill="var(--teal-soft)"/>
+          <g stroke="var(--navy)" stroke-width="4" stroke-linecap="round" fill="none">
+            <path d="M296 92 268 138"/><path d="M268 138 320 152"/><path d="M296 92 320 152" stroke-dasharray="1 9"/>
+          </g>
+          <circle cx="296" cy="92" r="15" fill="var(--teal)"/><circle cx="268" cy="138" r="12" fill="var(--teal)"/><circle cx="320" cy="152" r="14" fill="var(--teal)"/>
+          <rect x="158" y="34" width="44" height="34" rx="17" fill="var(--surface)" stroke="var(--navy)" stroke-width="7"/>
+          <rect x="112" y="58" width="136" height="214" rx="42" fill="var(--surface)" stroke="var(--navy)" stroke-width="7"/>
+          <clipPath id="bagIn"><rect x="115.5" y="61.5" width="129" height="207" rx="38.5"/></clipPath>
+          <g clip-path="url(#bagIn)"><path d="M112 176C140 166 158 184 180 176S226 164 250 174V272H112Z" fill="var(--teal)"/></g>
+          <path d="M132 108h24M132 132h24" stroke="var(--navy)" stroke-width="7" stroke-linecap="round"/>
+          <path d="M180 198C180 198 160 220 160 234a20 20 0 0 0 40 0C200 220 180 198 180 198Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
+          <rect x="156" y="272" width="48" height="30" rx="9" fill="var(--surface)" stroke="var(--navy)" stroke-width="7"/>
+          <circle class="drip" cx="180" cy="283" r="4.5" fill="var(--teal)"/>
+          <path d="M180 302V326C180 352 200 360 230 360H316" fill="none" stroke="var(--navy)" stroke-width="7" stroke-linecap="round"/>
+          <path d="M296 334H424M296 386H424" stroke="var(--teal)" stroke-width="6" stroke-linecap="round" opacity=".55"/>
+          <rect x="304" y="350" width="30" height="20" rx="6" fill="var(--navy)"/>
+          <path d="M334 360H396" stroke="var(--navy)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M340 208c9 12 9 24 0 30-9-6-9-18 0-30Z" fill="var(--teal)"/>
+          <path d="M366 246c6 8 6 16 0 20-6-4-6-12 0-20Z" fill="var(--teal)" opacity=".7"/>
+          <path d="M92 300c5 7 5 14 0 18-5-4-5-11 0-18Z" fill="var(--teal)" opacity=".7"/>
+        </svg>
+        <div class="chip-f chip-a"><svg class="ic"><use href="#i-molecule"/></svg>Osmolaridad</div>
+        <div class="chip-f chip-c"><span class="dotp"></span>Agua y volumen</div>
+        <div class="chip-f chip-b"><svg class="ic"><use href="#i-catheter"/></svg>Acceso venoso</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-label="Qué evalúa OsmoNPT">
+    <ul class="features">
+      <li class="feat"><span class="fi"><svg class="ic" aria-hidden="true"><use href="#i-molecule"/></svg></span><h3>Osmolaridad</h3><p>Estimación de mOsm/L de la fórmula.</p></li>
+      <li class="feat"><span class="fi"><svg class="ic" aria-hidden="true"><use href="#i-scale"/></svg></span><h3>Aporte nutricional</h3><p>Proteínas y calorías totales, proteicas y no proteicas.</p></li>
+      <li class="feat"><span class="fi"><svg class="ic" aria-hidden="true"><use href="#i-drop"/></svg></span><h3>Volumen y agua</h3><p>Volumen de componentes y cantidad de agua de la formulación.</p></li>
+      <li class="feat"><span class="fi"><svg class="ic" aria-hidden="true"><use href="#i-catheter"/></svg></span><h3>Acceso venoso</h3><p>Orientación para administración periférica o central según osmolaridad.</p></li>
+    </ul>
+  </section>
+
+  <section id="calculadora" class="calc-section">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Calculadora de evaluación</h2>
+        <p>Complete las secciones en orden. La osmolaridad y la orientación de acceso venoso se actualizan mientras ingresa los datos.</p>
+      </div>
+
+      <div class="calc" id="calc" data-tab="general">
+        <div class="tabs" role="tablist" aria-label="Secciones de la evaluación">
+          <button type="button" class="tab" role="tab" id="tab-general" aria-controls="pane-general" aria-selected="true" aria-label="Datos generales"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><span class="tl-full">Datos generales</span><span class="tl-short" aria-hidden="true">Datos</span></button>
+          <button type="button" class="tab" role="tab" id="tab-macro" aria-controls="pane-macro" aria-selected="false" tabindex="-1" aria-label="Macronutrientes"><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg><span class="tl-full">Macronutrientes</span><span class="tl-short" aria-hidden="true">Macros</span></button>
+          <button type="button" class="tab" role="tab" id="tab-elec" aria-controls="pane-elec" aria-selected="false" tabindex="-1" aria-label="Electrolitos y aditivos"><svg class="ic" aria-hidden="true"><use href="#i-flask"/></svg><span class="tl-full">Electrolitos y aditivos</span><span class="tl-short" aria-hidden="true">Electrolitos</span></button>
+          <button type="button" class="tab" role="tab" id="tab-result" aria-controls="pane-result" aria-selected="false" tabindex="-1" aria-label="Resultados"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg><span>Resultados</span></button>
+        </div>
+
+        <div class="calc-body">
+          <div class="panes">
+
+            <div class="pane" id="pane-general" role="tabpanel" aria-labelledby="tab-general">
+              <div class="pane-head"><h3>Datos generales</h3><p>Seleccione el hospital para el código de referencia y registre el volumen total y el peso.</p></div>
+              <div class="fields">
+                <div class="field wide">
+                  <label for="hosp">Hospital</label>
+                  <select id="hosp" class="sel"></select>
+                  <p class="help">El hospital seleccionado define el prefijo del código de referencia.</p>
+                </div>
+                <div class="field">
+                  <label for="vt">Volumen total de la fórmula</label>
+                  <div class="uf"><input id="vt" type="text" inputmode="decimal" autocomplete="off" enterkeyhint="next" placeholder="0.00"><span class="u">L</span></div>
+                  <p class="help">Se ingresa en litros: 150 mL = 0.15 L.</p>
+                </div>
+                <div class="field">
+                  <label for="wt">Peso del paciente</label>
+                  <div class="uf"><input id="wt" type="text" inputmode="decimal" autocomplete="off" enterkeyhint="next" placeholder="0.00"><span class="u">kg</span></div>
+                  <p class="help">Las dosis se ingresan por kilo de peso.</p>
+                </div>
+              </div>
+              <p class="hint" id="volHint" hidden>¿El volumen está en mL? Este campo se ingresa en litros (150 mL = 0.15 L).</p>
+            </div>
+
+            <div class="pane" id="pane-macro" role="tabpanel" aria-labelledby="tab-macro" hidden>
+              <div class="pane-head"><h3>Macronutrientes</h3><p>Ingrese la dosis por kg y seleccione el producto o presentación comercial que utilizará.</p></div>
+              <table class="comp">
+                <colgroup><col><col class="c-dose"><col class="c-vol"><col class="c-osm"></colgroup>
+                <thead><tr><th scope="col">Componente y marca</th><th scope="col">Dosis por kg</th><th scope="col" class="num">Volumen (mL)</th><th scope="col" class="num">Osmolaridad (mOsm)</th></tr></thead>
+                <tbody id="rowsMacro"></tbody>
+              </table>
+            </div>
+
+            <div class="pane" id="pane-elec" role="tabpanel" aria-labelledby="tab-elec" hidden>
+              <div class="pane-head"><h3>Electrolitos y aditivos</h3><p>Ingrese la dosis por kg y seleccione el producto o presentación comercial que utilizará.</p></div>
+              <table class="comp">
+                <colgroup><col><col class="c-dose"><col class="c-vol"><col class="c-osm"></colgroup>
+                <thead><tr><th scope="col">Componente y marca</th><th scope="col">Dosis por kg</th><th scope="col" class="num">Volumen (mL)</th><th scope="col" class="num">Osmolaridad (mOsm)</th></tr></thead>
+                <tbody id="rowsElec"></tbody>
+              </table>
+            </div>
+
+            <div class="pane" id="pane-result" role="tabpanel" aria-labelledby="tab-result" hidden>
+              <div class="pane-head"><h3>Resultados</h3><p>Evaluación de la formulación con los datos ingresados.</p></div>
+              <div id="results" data-state="empty">
+                <div class="banner" id="banner" data-tone="neutral" role="status" aria-live="polite">
+                  <span id="bannerIcon"></span>
+                  <div><p class="banner-t" id="bannerT">Aún no hay resultados</p><p class="banner-s" id="bannerS">Ingrese el volumen total, el peso y la dosis de al menos un componente.</p></div>
+                </div>
+
+                <div class="rgrid">
+                  <article class="rcard span2">
+                    <header><svg class="ic" aria-hidden="true"><use href="#i-molecule"/></svg><h4>Osmolaridad final</h4></header>
+                    <p class="big"><span id="osmVal">—</span><span class="unit">mOsm/L</span></p>
+                    <div class="scale" id="scale" aria-hidden="true">
+                      <div class="track">
+                        <div class="zone z-per"></div><div class="zone z-cen"></div>
+                        <div class="thr"><span>900</span></div><div class="mark"></div>
+                      </div>
+                      <div class="zlabels"><span>Vía periférica</span><span>Vía central</span></div>
+                    </div>
+                  </article>
+
+                  <article class="rcard rcard-route" id="routeCard" data-tone="neutral">
+                    <header><svg class="ic" aria-hidden="true"><use href="#i-catheter"/></svg><h4>Orientación de acceso venoso</h4></header>
+                    <p class="state" id="routeState">—</p>
+                    <p class="sub" id="routeSub">Pendiente de cálculo.</p>
+                  </article>
+
+                  <article class="rcard">
+                    <header><svg class="ic" aria-hidden="true"><use href="#i-scale"/></svg><h4>Proteínas</h4></header>
+                    <p class="mid"><span id="protG">—</span><span class="unit">g</span></p>
+                    <p class="sub"><b id="protKg">—</b> g/kg/día</p>
+                  </article>
+
+                  <article class="rcard">
+                    <header><svg class="ic" aria-hidden="true"><use href="#i-pie"/></svg><h4>Calorías</h4></header>
+                    <p class="mid"><span id="kT">—</span><span class="unit">kcal</span></p>
+                    <ul class="kv">
+                      <li><span>Proteicas</span><b id="kP">—</b></li>
+                      <li><span>No proteicas</span><b id="kN">—</b></li>
+                      <li><span>Por kg</span><b id="kTk">—</b></li>
+                    </ul>
+                  </article>
+
+                  <article class="rcard">
+                    <header><svg class="ic" aria-hidden="true"><use href="#i-drop"/></svg><h4>Agua en fórmula</h4></header>
+                    <p class="mid"><span id="water">—</span><span class="unit">mL</span></p>
+                    <ul class="kv">
+                      <li><span>Volumen de componentes</span><b id="vcTot">—</b></li>
+                      <li><span>Volumen total prescrito</span><b id="vtMl">—</b></li>
+                      <li><span>mOsm de los componentes</span><b id="moTot">—</b></li>
+                    </ul>
+                  </article>
+
+                  <article class="rcard vcard span3" id="volCard" data-tone="neutral">
+                    <svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>
+                    <div><h4>Validación de volumen</h4><p class="vt" id="volT">Pendiente de cálculo</p><p class="vs" id="volS">Se validará cuando complete los datos.</p></div>
+                  </article>
+                </div>
+
+                <div class="record">
+                  <div>
+                    <h4>Resumen y código de referencia</h4>
+                    <p class="sub">Al imprimir este resumen se genera un código de referencia único para facilitar su identificación en la orden o expediente físico. OsmoNPT no almacena, registra ni transmite datos del paciente ni de la formulación.</p>
+                    <p class="hint-s" id="printHint" hidden></p>
+                    <p class="codeline" id="codeLine" hidden><span>Código de referencia</span><strong id="codeVal"></strong></p>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-lg" id="print" disabled><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg>Imprimir resumen</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="pane-nav">
+              <button type="button" class="btn btn-ghost" id="prevTab" hidden>Anterior</button>
+              <button type="button" class="btn btn-primary" id="nextTab">Siguiente</button>
+            </div>
+          </div>
+
+          <aside class="live" id="live" aria-label="Lectura en vivo">
+            <p class="live-label">Osmolaridad de la mezcla</p>
+            <p class="live-val"><span id="liveOsm">—</span><span class="unit">mOsm/L</span></p>
+            <div class="chip" id="liveRoute" data-tone="neutral"><svg class="ic" aria-hidden="true"><use href="#i-catheter"/></svg><span id="liveRouteTxt">Sin resultado</span></div>
+            <div class="chip" id="liveVol" data-tone="warn" hidden><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span>Revise el volumen total</span></div>
+            <button type="button" class="btn btn-soft" id="toResults" disabled>Ver resultados</button>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="acerca" class="about">
+    <div class="wrap about-in">
+      <h2>Acerca de OsmoNPT</h2>
+      <div class="about-text">
+        <p>OsmoNPT es una herramienta digital de apoyo para la evaluación de formulaciones de Nutrición Parenteral. Permite estimar la osmolaridad final, el aporte proteico, el volumen total de agua y los volúmenes de los componentes de la mezcla.</p>
+        <p>Además, calcula las calorías totales, proteicas y no proteicas de la formulación, facilitando una valoración nutricional más completa. También orienta sobre la vía de administración más adecuada —periférica o central— según la osmolaridad calculada e identifica posibles inconsistencias entre el volumen de los componentes y el volumen final prescrito.</p>
+        <p>OsmoNPT ha sido diseñada para facilitar una revisión rápida, clara y organizada de la NPT por profesionales de salud. Sus resultados deben interpretarse junto con el juicio clínico, la prescripción individualizada y los procedimientos de validación farmacéutica establecidos.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>OsmoNPT es una herramienta de apoyo para la evaluación de formulaciones de Nutrición Parenteral. No sustituye el juicio clínico, la prescripción individualizada ni la validación farmacéutica.</p>
+    <p>OsmoNPT no solicita, registra ni almacena nombres, expedientes u otros datos identificables de pacientes. Los cálculos se realizan localmente en el navegador.</p>
+    <p class="copy">© 2026 OsmoNPT. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<div class="dock" id="dock" data-tone="neutral" aria-hidden="true">
+  <span class="dot"></span>
+  <div>
+    <p class="d-val"><span id="dockVal">—</span> <small>mOsm/L</small></p>
+    <p class="d-txt" id="dockTxt">Ingrese los datos</p>
+    <p class="d-vol" id="dockVol" hidden>Revise el volumen total</p>
+  </div>
+</div>
+
+<section class="print-only" id="printSheet" aria-hidden="true"></section>
+
+<script src="app.js" defer></script>
+</body>
+</html>

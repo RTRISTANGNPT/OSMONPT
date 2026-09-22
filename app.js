@@ -21,9 +21,9 @@
     { key: 'kcl', name: 'KCl', unit: 'mEq', brands: [
       { id: 'kcl-pisa-10', label: 'Cloruro de potasio, Pisa, 10 mL', conc: 2, osm: 4 } ] },
     { key: 'kpo4', name: 'KPO4', unit: 'mmol', brands: [
-      { id: 'kpo4-por-confirmar', label: 'Marca por confirmar', conc: 3, osm: 7.4 } ] },
+      { id: 'kpo4-medilix-15', label: 'Fosfato de potasio, Medilix Lifesciences, 15 mL (45 mmol / 66 mEq)', conc: 3, osm: 7.4 } ] },
     { key: 'mgso4', name: 'MgSO4', unit: 'mEq', brands: [
-      { id: 'mgso4-pisa-10', label: 'Sulfato de magnesio, Pisa, 10 mL', conc: 0.81, osm: 0.81 } ] },
+      { id: 'mgso4-pisa-10', label: 'Sulfato de magnesio 10 %, Pisa, 10 mL', conc: 0.81, osm: 0.81 } ] },
     { key: 'ca', name: 'Ca gluconato', unit: 'mg', brands: [
       { id: 'ca-gluconato-pisa-10', label: 'Gluconato de calcio, Pisa, 10 mL', conc: 100, osm: 0.68 } ] }
   ];
